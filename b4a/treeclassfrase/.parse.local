@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "treeclassfrase"
+    },
+    "treeclassfrase": {
+      "applicationId": "O71E9PqPAiBTx0EMrfrmLIdK4vNa55upOOWHeWTH"
+    }
+  }
+}
