@@ -40,12 +40,24 @@ class HomeController extends GetxController {
         Ngb(id: '...', ordem: 'Categoria', name: 'Categoria', filter: []);
     if (sub.isNotEmpty) {
       return TreeNode(
-          content:
-              InkWell(child: Text(ngbTemp.name), onTap: () => copy(ngbTemp)),
+          content: InkWell(
+              child: Text(
+                ngbTemp.name,
+                style: TextStyle(
+                    color:
+                        ngbTemp.filter.contains('cc') ? Colors.orange : null),
+              ),
+              onTap: () => copy(ngbTemp)),
           children: sub.map((e) => childrenNodes(e)).toList());
     }
     return TreeNode(
-      content: InkWell(child: Text(ngbTemp.name), onTap: () => copy(ngbTemp)),
+      content: InkWell(
+          child: Text(
+            ngbTemp.name,
+            style: TextStyle(
+                color: ngbTemp.filter.contains('cc') ? Colors.orange : null),
+          ),
+          onTap: () => copy(ngbTemp)),
     );
   }
 
