@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: Colors.white),
               ),
               onTap: () {
-                widget.homeController.initNgbList('ngb');
+                widget.homeController.filterCategory('ngb');
               },
             ),
           ),
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: Colors.white),
               ),
               onTap: () {
-                widget.homeController.initNgbList('cc');
+                widget.homeController.filterCategory('cc');
               },
             ),
           ),
@@ -77,36 +77,6 @@ class _HomePageState extends State<HomePage> {
     return TreeView(
       treeController: _controller,
       nodes: nodes,
-      // nodes: [
-      //   TreeNode(content: const Text("Acento")),
-      //   TreeNode(
-      //     content: const Text("Adjetivo"),
-      //     children: [
-      //       TreeNode(
-      //         content: const Text("Superlativo"),
-      //         children: [
-      //           TreeNode(
-      //             content: const Text("Absoluto"),
-      //             children: [
-      //               TreeNode(content: const Text("analitico")),
-      //               TreeNode(content: const Text("sintetico"))
-      //             ],
-      //           ),
-      //           TreeNode(
-      //             content: const Text("Relativo"),
-      //             children: [
-      //               TreeNode(content: const Text("inferior")),
-      //               TreeNode(content: const Text("superior"))
-      //             ],
-      //           ),
-      //           TreeNode(content: const Text("Uniforme")),
-      //         ],
-      //       ),
-      //     ],
-      //   ),
-      //   TreeNode(content: const Text("Substantivo")),
-      //   TreeNode(content: const Text("Verbo")),
-      // ],
     );
   }
 }

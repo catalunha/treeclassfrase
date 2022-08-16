@@ -2,21 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:get/get.dart';
-import 'package:treeclassfrase/home/ngb_data.dart';
-import 'package:treeclassfrase/home/ngb_model.dart';
+import 'package:treeclassfrase/home/catclass_data.dart';
+import 'package:treeclassfrase/home/catclass_model.dart';
 
 class HomeController extends GetxController {
-  final category = <Ngb>[].obs;
-  List<String> categoryParentList = <String>[];
+  final category = <CatClassModel>[].obs;
+  // List<String> categoryParentList = <String>[];
   @override
   void onInit() {
     initNgbList('ngb');
     super.onInit();
   }
 
-  initNgbList(String filter) {
+  initNgbList(String filter) async {
     category.clear();
-    category.addAll(NgbData.getCategory(filter));
+    category.addAll(await CatClassData.readCategory(filter));
+  }
+
+  filterCategory(String filter) async {
+    category.clear();
+    category.addAll(CatClassData.filterCategory(filter));
   }
 
   List<TreeNode> createTree() {
@@ -29,15 +34,16 @@ class HomeController extends GetxController {
     return treeNodeList;
   }
 
-  TreeNode childrenNodes(Ngb? ngb) {
-    List<Ngb> sub = [];
+  TreeNode childrenNodes(CatClassModel? ngb) {
+    List<CatClassModel> sub = [];
     if (ngb == null) {
       sub = category.where((element) => element.parent == null).toList();
     } else {
       sub = category.where((element) => element.parent == ngb.id).toList();
     }
-    Ngb ngbTemp = ngb ??
-        Ngb(id: '...', ordem: 'Categoria', name: 'Categoria', filter: []);
+    CatClassModel ngbTemp = ngb ??
+        CatClassModel(
+            id: '...', ordem: 'Categoria', name: 'Categoria', filter: []);
     if (sub.isNotEmpty) {
       return TreeNode(
           content: InkWell(
@@ -61,27 +67,28 @@ class HomeController extends GetxController {
     );
   }
 
-  copy(Ngb ngb) async {
-    categoryParentList.clear();
-    List<String> ordemList = getParent(ngb);
-    String ordem = ordemList.reversed.join(' - ');
+  copy(CatClassModel ngb) async {
+    // categoryParentList.clear();
+    // List<String> ordemList = getParent(ngb);
+    // String ordem = ordemList.reversed.join(' - ');
+    // String ordem = NgbData.getParent(ngb: ngb);
     Get.snackbar(
-      ordem,
+      ngb.ordem,
       'Ordem copiada.',
       backgroundColor: Colors.yellow,
       margin: const EdgeInsets.all(10),
     );
-    await Clipboard.setData(ClipboardData(text: ordem));
+    await Clipboard.setData(ClipboardData(text: ngb.ordem));
   }
 
-  List<String> getParent(Ngb ngb) {
-    categoryParentList.add(ngb.name);
-    Ngb? ngbParent =
-        category.firstWhereOrNull((element) => element.id == ngb.parent);
+  // List<String> getParent(Ngb ngb) {
+  //   categoryParentList.add(ngb.name);
+  //   Ngb? ngbParent =
+  //       category.firstWhereOrNull((element) => element.id == ngb.parent);
 
-    if (ngbParent != null) {
-      getParent(ngbParent);
-    }
-    return categoryParentList;
-  }
+  //   if (ngbParent != null) {
+  //     getParent(ngbParent);
+  //   }
+  //   return categoryParentList;
+  // }
 }
